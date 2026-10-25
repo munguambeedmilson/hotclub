@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,13 +74,13 @@
         <i class="bi bi-lightning-fill"></i>
       </p>
 
-      <div class="progress flash-progress" role="progressbar" aria-label="Tempo restante">
+      <div class="progress flash-progress" role="progressbar" aria-label="Time remaining">
         <div class="progress-bar flash-progress-bar" id="cd-bar"></div>
       </div>
     </section>
 
     <!-- Produtos -->
-    <section class="row g-3 g-md-4 mb-5">
+    <section id="catalogGrid" class="row g-3 g-md-4 mb-5">
 
       <!-- CARD PRINCIPAL (PRIMEIRO DA PÁGINA) -->
       <div class="col-12">
@@ -102,7 +102,7 @@
             </span>
 
             <!-- Botão de reprodução -->
-            <a href="#" class="btn-play position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center" aria-label="Reproduzir vídeo">
+            <a href="#" class="btn-play position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center" aria-label="Play video">
               <i class="bi bi-play-fill"></i>
             </a>
           </div>
@@ -151,18 +151,12 @@
       </div>
 
       <!-- PRIMEIRO CARD -->
-      <div class="col-6 card-half">
+      <div class="col-6 col-md-3 card-half">
         <article class="product-card card h-100 rounded-4 overflow-hidden">
 
           <!-- Imagem + botão play -->
           <div class="product-media position-relative">
             <img src="Images/all%20content.jpg" alt="Secondary Content" class="product-cover w-100 h-100 object-fit-cover">
-
-            <!-- Selos do canto esquerdo -->
-            <span class="ribbon-hot position-absolute top-0 start-0 fw-bolder">NEW</span>
-            <span class="badge-destaque position-absolute rounded-pill d-inline-flex align-items-center gap-1 fw-bold">
-              <i class="bi bi-star-fill"></i> NOVO
-            </span>
 
             <!-- Estoque restante -->
             <span class="badge-left position-absolute bottom-0 end-0 rounded-pill d-inline-flex align-items-center gap-1 fw-bold text-nowrap">
@@ -170,7 +164,7 @@
             </span>
 
             <!-- Botão de reprodução -->
-            <a href="#" class="btn-play position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center" aria-label="Reproduzir vídeo">
+            <a href="#" class="btn-play position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center" aria-label="Play video">
               <i class="bi bi-play-fill"></i>
             </a>
           </div>
@@ -218,18 +212,12 @@
       </div>
 
       <!-- CÓPIA DO PRIMEIRO CARD -->
-      <div class="col-6 card-half">
+      <div class="col-6 col-md-3 card-half">
         <article class="product-card card h-100 rounded-4 overflow-hidden">
 
           <!-- Imagem + botão play -->
           <div class="product-media position-relative">
             <img src="Images/all%20content.jpg" alt="Secondary Content" class="product-cover w-100 h-100 object-fit-cover">
-
-            <!-- Selos do canto esquerdo -->
-            <span class="ribbon-hot position-absolute top-0 start-0 fw-bolder">NEW</span>
-            <span class="badge-destaque position-absolute rounded-pill d-inline-flex align-items-center gap-1 fw-bold">
-              <i class="bi bi-star-fill"></i> NOVO
-            </span>
 
             <!-- Estoque restante -->
             <span class="badge-left position-absolute bottom-0 end-0 rounded-pill d-inline-flex align-items-center gap-1 fw-bold text-nowrap">
@@ -237,7 +225,7 @@
             </span>
 
             <!-- Botão de reprodução -->
-            <a href="#" class="btn-play position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center" aria-label="Reproduzir vídeo">
+            <a href="#" class="btn-play position-absolute top-50 start-50 translate-middle rounded-circle d-flex align-items-center justify-content-center" aria-label="Play video">
               <i class="bi bi-play-fill"></i>
             </a>
           </div>
@@ -294,6 +282,114 @@
     <div data-include="cards-5.html"></div>
 
   </main>
+
+  <!-- Rodapé -->
+  <footer class="site-footer">
+    <div class="container px-3">
+      <div class="footer-box rounded-4 text-center px-3 py-4">
+        <h2 class="footer-title fw-bolder mb-2">VIP CONTENT</h2>
+
+        <p class="footer-desc mb-3">
+          Premium digital content. Please review the content description before purchasing.
+        </p>
+
+        <nav class="footer-links d-flex flex-wrap justify-content-center mb-2" aria-label="Store information">
+          <a href="#">Digital delivery</a>
+          <a href="#">Secure purchase</a>
+        </nav>
+
+        <nav class="footer-links d-flex flex-wrap justify-content-center mb-3" aria-label="Support">
+          <a href="#">Customer support</a>
+        </nav>
+
+        <nav class="footer-links d-flex flex-wrap justify-content-center mb-0" aria-label="Legal">
+          <a href="#">Terms &amp; License</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de pré-visualização (aberto pelos botões PREVIEW / play) -->
+  <div class="preview-modal" id="previewModal" hidden>
+    <div class="preview-dialog rounded-4 overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="pvTitle">
+
+      <button type="button" class="preview-close" id="previewClose" aria-label="Close preview">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <div class="preview-video-wrap">
+        <video class="preview-video" id="previewVideo" playsinline controls preload="metadata"></video>
+      </div>
+
+      <!-- Descrição do próprio produto -->
+      <div class="preview-info px-3 py-2">
+        <p class="preview-label mb-1"><i class="bi bi-play-circle"></i> VIDEO PREVIEW</p>
+        <h3 class="preview-title fw-bolder mb-1" id="pvTitle">ALL CONTENT</h3>
+        <p class="preview-desc mb-2" id="pvDesc">Premium template kit for creators.</p>
+        <div class="preview-tags d-flex flex-wrap gap-1" id="pvTags"></div>
+      </div>
+
+      <!-- Preço + compra -->
+      <div class="preview-bar d-flex align-items-center justify-content-between gap-2">
+        <div class="d-flex align-items-baseline gap-2">
+          <span class="price-old text-decoration-line-through" id="pvPriceOld">$499</span>
+          <span class="price-new fw-bolder" id="pvPriceNew">$249</span>
+        </div>
+
+        <a href="https://t.me/" target="_blank" rel="noopener" class="btn btn-buy fw-bold d-inline-flex align-items-center justify-content-center gap-1 text-nowrap" id="pvBuy">
+          <i class="bi bi-telegram"></i> BUY
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de métodos de pagamento (aberto pelo botão BUY NOW) -->
+  <div class="pay-modal" id="payModal" hidden>
+    <div class="pay-dialog rounded-4" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+
+      <button type="button" class="preview-close" id="payClose" aria-label="Close payment methods">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <h3 class="pay-title fw-bolder mb-2" id="payTitle">Choose Payment Method</h3>
+      <p class="pay-sub mb-3">Select your preferred payment method:</p>
+
+      <div class="pay-methods" id="payMethods" role="radiogroup" aria-label="Payment methods">
+        <button type="button" class="pay-method pay-method-paypal" data-method="PayPal" role="radio" aria-checked="false">
+          <span class="pay-icon pay-icon-paypal" aria-hidden="true">P</span> PayPal
+        </button>
+        <button type="button" class="pay-method pay-method-crypto" data-method="Crypto" role="radio" aria-checked="false">
+          <span class="pay-icon pay-icon-crypto" aria-hidden="true">&#8383;</span> Crypto
+        </button>
+        <button type="button" class="pay-method pay-method-binance" data-method="Binance Gift Card" role="radio" aria-checked="false">
+          <span class="pay-icon pay-icon-binance" aria-hidden="true">&#9670;</span> Binance Gift Card
+        </button>
+        <button type="button" class="pay-method pay-method-cash" data-method="Cash App" role="radio" aria-checked="false">
+          <span class="pay-icon pay-icon-cash" aria-hidden="true">$</span> Cash App
+        </button>
+        <button type="button" class="pay-method pay-method-stripe" data-method="stripe" role="radio" aria-checked="false">
+          <span class="pay-icon pay-icon-stripe" aria-hidden="true">S</span> stripe
+        </button>
+      </div>
+
+      <p class="pay-hint mb-0 mt-3">Tap a payment method to open Telegram with your purchase message ready.</p>
+    </div>
+  </div>
+
+  <!-- Notificação de compra recente (prova social, canto inferior esquerdo) -->
+  <div class="purchase-toast" id="purchaseToast" role="status" aria-live="polite" hidden>
+    <img src="Images/all%20content.jpg" alt="" class="toast-thumb">
+    <div class="toast-body">
+      <p class="toast-text mb-1"><strong id="toastName">David M.</strong> just bought <strong id="toastProduct">ALL CONTENT</strong> <span class="toast-price" id="toastPrice">— $249</span></p>
+      <span class="toast-time" id="toastTime">just now</span>
+    </div>
+    <button type="button" class="toast-close" id="toastClose" aria-label="Close notification">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
 
   <script src="script.js"></script>
 </body>

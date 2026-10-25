@@ -126,12 +126,30 @@ body {
   transition: width 1s linear;
 }
 
+/* Versão compacta do Flash Sale — SÓ mobile (< 576px).
+   Tablet/desktop mantêm o tamanho original. A largura nunca é alterada. */
+@media (max-width: 575.98px) {
+  .flash-sale {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .flash-label { font-size: clamp(0.56rem, 2.6vw, 0.8rem); }
+  .countdown { font-size: clamp(1.9rem, 10vw, 3.2rem); line-height: 1.05; }
+  .flash-message { font-size: 0.74rem; margin-bottom: 0.35rem !important; }
+}
+
 /* ===== Card de produto ===== */
 .product-card {
   background: linear-gradient(180deg, #1a1030 0%, #120a22 100%);
   border: 1px solid #3b2a5c;
   color: #fff;
   transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+/* Parte da descrição: fundo escuro como na referência (#141414) */
+.product-card .card-body {
+  background-color: #141414;
 }
 
 .product-card:hover {
@@ -302,6 +320,163 @@ body {
   color: #fff;
 }
 
+/* ===== Rodapé ===== */
+.site-footer {
+  /* espaço para o botão Telegram flutuante não cobrir a última linha */
+  padding-bottom: 4.5rem;
+}
+
+.footer-box {
+  background: #161616;
+  border: 1px solid #242424;
+}
+
+.footer-title {
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  color: #a78bfa;
+}
+
+.footer-desc {
+  color: #9ca3af;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.footer-links {
+  row-gap: 0.5rem;
+  column-gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #9ca3af;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover,
+.footer-links a:focus {
+  color: #c4b5fd;
+}
+
+/* ===== Modal de pré-visualização de vídeo ===== */
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1080;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.preview-modal[hidden] {
+  display: none;
+}
+
+.preview-dialog {
+  position: relative;
+  width: min(680px, 100%);
+  background: linear-gradient(180deg, #1a1030 0%, #120a22 100%);
+  border: 1px solid #3b2a5c;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+.preview-video-wrap {
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.preview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.preview-video.is-empty {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("Images/all%20content.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.preview-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.preview-close:hover {
+  background: #7c3aed;
+  color: #fff;
+}
+
+.preview-info {
+  border-top: 1px solid #2f2547;
+}
+
+.preview-desc {
+  color: #d1d5db;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.preview-tags .tag {
+  font-size: 0.58rem;
+  padding: 2px 7px;
+}
+
+.preview-tags .tag-dot {
+  display: inline-block;
+}
+
+.preview-bar {
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-top: 1px solid #2f2547;
+}
+
+.preview-label {
+  color: #a78bfa;
+  font-size: 0.62rem;
+  letter-spacing: 1px;
+}
+
+.preview-title {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.preview-bar .price-old {
+  font-size: 0.75rem;
+}
+
+.preview-bar .price-new {
+  font-size: 1.1rem;
+}
+
+.preview-bar .btn-buy {
+  font-size: 0.72rem;
+  padding: 7px 14px;
+  border-radius: 8px;
+}
+
 /* ===== Cards lado a lado (metade da largura) no mobile ===== */
 @media (max-width: 575.98px) {
   .card-half .card-body { padding: 0.6rem !important; padding-top: 0.4rem !important; }
@@ -309,7 +484,10 @@ body {
   .card-half .pill-off { font-size: 0.6rem; padding: 1px 6px; }
   .card-half .product-meta { font-size: 0.65rem; }
   .card-half .product-desc { font-size: 0.68rem; }
-  .card-half .tag { font-size: 0.55rem; padding: 1px 6px; }
+  /* Tags lado a lado numa só linha (antes quebravam em 2-4 linhas) */
+  .card-half .flex-wrap { flex-wrap: nowrap !important; gap: 0.2rem !important; }
+  .card-half .tag { font-size: clamp(0.42rem, 1.9vw, 0.48rem); padding: 1px 3px; gap: 3px; min-width: 0; overflow: hidden; white-space: nowrap; }
+  .card-half .tag-dot { display: none; }
   .card-half .price-old { font-size: 0.72rem; }
   .card-half .price-new { font-size: 1rem; }
 
@@ -328,13 +506,262 @@ body {
   .card-half .btn-buy i { display: none; }
 }
 
+/* ===== Modal de métodos de pagamento ===== */
+.pay-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1090;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.pay-modal[hidden] {
+  display: none;
+}
+
+.pay-dialog {
+  position: relative;
+  width: min(420px, 100%);
+  margin: auto;
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  padding: 24px 18px 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+.pay-title {
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  text-align: center;
+  padding: 0 34px;
+}
+
+.pay-sub {
+  color: #9ca3af;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.pay-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pay-method {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.pay-method:hover {
+  transform: translateY(-1px);
+  color: inherit;
+}
+
+.pay-method.is-selected {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.28);
+}
+
+.pay-method-paypal { background: #003087; }
+.pay-method-crypto { background: #323232; }
+.pay-method-binance { background: #f3ba2f; color: #141414; }
+.pay-method-cash { background: #00d632; color: #141414; }
+.pay-method-stripe { background: #635bff; }
+
+.pay-icon {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.pay-icon-paypal { background: #fff; color: #003087; }
+.pay-icon-crypto { background: #f7931a; color: #fff; border-radius: 50%; }
+.pay-icon-binance { background: #141414; color: #f3ba2f; }
+.pay-icon-cash { background: #141414; color: #fff; border-radius: 50%; }
+.pay-icon-stripe { background: #fff; color: #635bff; }
+
+.pay-hint {
+  color: #6b7280;
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+/* ===== Notificação de compra recente ===== */
+.purchase-toast {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 1060;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(300px, calc(100vw - 96px)); /* deixa livre o botão flutuante à direita */
+  padding: 8px 28px 8px 8px;
+  background: #141414;
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.purchase-toast[hidden] {
+  display: none;
+}
+
+/* No telemóvel sobe acima do botão Telegram flutuante (canto inferior direito) */
+@media (max-width: 575.98px) {
+  .purchase-toast { bottom: 76px; }
+}
+
+.purchase-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-thumb {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.toast-body {
+  min-width: 0;
+}
+
+.toast-text {
+  margin: 0;
+  color: #d1d5db;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.toast-text strong {
+  color: #fff;
+}
+
+.toast-time {
+  color: #a78bfa;
+  font-size: 0.65rem;
+  letter-spacing: 0.3px;
+}
+
+/* Preço em destaque na mesma linha do nome */
+.toast-price {
+  display: inline-block;
+  color: #fbbf24;
+  font-size: 0.95rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.toast-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.72rem;
+  transition: color 0.2s;
+}
+
+.toast-close:hover {
+  color: #fff;
+}
+
+/* ===== Cards de 1/4 (4 por linha) entre 768px e 1279px: corpo compacto ===== */
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  .card-half .card-body { padding: 0.6rem !important; padding-top: 0.5rem !important; }
+  .card-half .product-title { font-size: 0.85rem; }
+  .card-half .pill-off { font-size: 0.6rem; padding: 1px 6px; }
+  .card-half .product-meta { font-size: 0.68rem; }
+  .card-half .product-desc { font-size: 0.72rem; }
+  .card-half .price-old { font-size: 0.75rem; }
+  .card-half .price-new { font-size: 1.05rem; }
+
+  /* Tags numa linha: fonte menor e sem o ponto, para não empenarem 3 linhas */
+  .card-half .card-body > .d-flex.flex-wrap { gap: 0.15rem; }
+  .card-half .tag { font-size: clamp(0.42rem, 0.95vw, 0.55rem); padding: 1px 3px; gap: 3px; white-space: nowrap; }
+  .card-half .tag-dot { display: none; }
+
+  /* Botões lado a lado sem cortar o texto */
+  .card-half .card-body .row { --bs-gutter-x: 0.4rem; }
+  .card-half .card-body .row > .col-5 { flex: 0 0 42%; max-width: 42%; }
+  .card-half .card-body .row > .col-7 { flex: 0 0 58%; max-width: 58%; }
+  .card-half .btn-preview,
+  .card-half .btn-buy { font-size: 0.6rem; padding: 7px 3px; letter-spacing: -0.2px; }
+}
+
+/* Cartões de 1/4 ainda estreitos (1280–1439px): só as tags voltam ao compacto */
+@media (min-width: 1280px) and (max-width: 1439.98px) {
+  .card-half .card-body > .d-flex.flex-wrap { gap: 0.15rem; }
+  .card-half .tag { font-size: 0.55rem; padding: 1px 5px; gap: 3px; white-space: nowrap; }
+  .card-half .tag-dot { display: none; }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .card-half .btn-preview i,
+  .card-half .btn-buy i { display: none; }
+  .card-half .btn-preview,
+  .card-half .btn-buy { font-size: 0.55rem; padding: 6px 2px; }
+  /* Cartão estreito: título e selo compactos para o nome não ser cortado */
+  .card-half .product-title { font-size: 0.75rem; letter-spacing: -0.2px; }
+  .card-half .pill-off { font-size: 0.55rem; padding: 1px 5px; }
+}
+
 /* ===== Tablet / Desktop ===== */
 @media (min-width: 576px) {
+  .pay-dialog { padding: 28px 24px 22px; }
+  .pay-title { font-size: 1.5rem; }
+  .preview-bar { flex-wrap: nowrap; padding: 12px 16px; }
+  .preview-info { padding: 12px 16px !important; }
+  .preview-title { font-size: 1.1rem; }
+  .preview-desc { font-size: 0.85rem; }
+  .preview-tags .tag { font-size: 0.62rem; padding: 2px 8px; }
+  .preview-bar .price-new { font-size: 1.3rem; }
+  .preview-bar .btn-buy { font-size: 0.8rem; padding: 9px 18px; }
+  .preview-close { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1.05rem; }
+
   .logo { font-size: 1.3rem; }
   .btn-telegram { font-size: 0.85rem; padding: 6px 18px 6px 6px; }
   .tg-icon { width: 32px; height: 32px; font-size: 1rem; }
   .flash-label { letter-spacing: 1.5px; }
   .flash-message { font-size: 0.85rem; }
+  .footer-title { font-size: 1.15rem; }
+  .footer-desc { font-size: 0.88rem; }
 }
 
 @media (min-width: 768px) {
